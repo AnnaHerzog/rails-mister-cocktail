@@ -8,12 +8,21 @@
 @import "font-awesome-sprockets";
 @import "font-awesome";
 
+
 // Your CSS partials
 @import "components/index";
 @import "pages/index";
 @import "cocktails";
+@import "footer";
+// @import "navbar";
+
 
 
 body {
   background-color: #fcf1cf;
 }
+
+h1 {
+  font-size: 40px;
+}
+
