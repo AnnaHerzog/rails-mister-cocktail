@@ -1,27 +1,59 @@
 <div class="container">
-<h1><%=@cocktail.name%></h1>
+ <p> <%= link_to "return to all cocktails", cocktails_path %> </p>
+  <h1><%=@cocktail.name%></h1>
+  <%= link_to "Edit cocktail", edit_cocktail_path(@cocktail), class: "btn-ghost new-btn" %> | <%=link_to cocktail_path(@cocktail), method: :delete,
+      data: { confirm: "Do you really want to delete this cocktail?"} do %>
+      <i class="far fa-trash-alt"></i>
+      <% end %>
+<br>
+  <div class="flexbox">
+    <div class="box">
+  <div id="cocktail_img">
 
-<%= cl_image_tag @cocktail.photo.key, height: 300, width: 400, crop: :fill %>
+    <% if @cocktail.photo.attachment.nil? %>
+      <p> No Image has been uploaded for this cocktail </p>
+    <% else %>
+      <%= cl_image_tag @cocktail.photo.key, height: 280, width: 300, crop: :fill, id: "cocktail_image" %>
 
-<h4>Ingredients:</h4>
-<ul>
-<% @cocktail.doses.each do |dose| %>
-<li>  <%= dose.description%> of <%=dose.ingredient.name %></li>
-<p> <%=link_to "delete", dose_path(dose), method: :delete,
+    <%end%>
+  </div>
+
+</div>
+<div class="box">
+
+    <h4 class="headline-font">Ingredients:</h4>
+  <% if @cocktail.doses.nil? %>
+  Add ingredients to this cocktail
+  <% else %>
+    <ul>
+      <% @cocktail.doses.each do |dose| %>
+      <li>  <%= dose.description%> of <%=dose.ingredient.name %></li>
+      <p> <%=link_to "delete", dose_path(dose), method: :delete,
       data: { confirm: "Do you really want to delete this cocktail?"} %>
-      </p>
-<% end %>
-</ul>
+    </p>
+    <% end %>
+    <% end %>
+  </ul>
 
-<h4>Add an ingredient:</h4>
-<%= simple_form_for [@cocktail, @dose] do |f| %>
-  <%= f.input :description %>
-  <%= f.association :ingredient %>
-  <!-- [...] -->
-  <!-- [...] -->
-  <%= f.submit "add", class: "btn btn-primary" %>
-<% end %>
+</div>
+</div>
 
+<div class="form-main show-form">
+  <div class="form-container show-form">
+    <h4 class="headline-font">Add an ingredient:</h4>
 
-<%= link_to "return to all cocktails", cocktails_path, class: "btn btn-outline-dark" %>
+    <%= simple_form_for [@cocktail, @dose] do |f| %>
+    <%= f.input :description %>
+    <%= f.association :ingredient %>
+    <!-- [...] -->
+    <!-- [...] -->
+    <%= f.submit "add", class: "btn-ghost show-btn" %>
+    <% end %>
+  </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
 </div>

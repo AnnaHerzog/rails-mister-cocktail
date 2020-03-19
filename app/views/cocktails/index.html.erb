@@ -13,17 +13,22 @@
   <span id="banner-typed-text"></span>
 </p>
 
-  <%=link_to" Create a new cocktail ", new_cocktail_path, :class => "btn btn-ghost" %>
+
 </div>
-
-
+<div id="center-btn">
+ <%=link_to" Create a new cocktail ", new_cocktail_path, :class => "btn btn-ghost" %>
+</div>
 
 <!-- <h1 >Browse through your favourite cocktails!</h1> -->
 <div class="container">
 <div class="cards">
 
   <%@cocktails.each do |cocktail|%>
-    <div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('<%= cl_image_path cocktail.photo.key, height: 300, width: 400, crop: :fill %>')">
+  <%if cocktail.photo.attachment.nil? %>
+  <div class="card-category" style="background-color:orange">
+    <%else%>
+      <div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('<%= cl_image_path cocktail.photo.key, height: 300, width: 400, crop: :fill %>')">
+      <% end %>
       <%=link_to cocktail.name, cocktail_path(cocktail) %> | <%=link_to cocktail_path(cocktail), method: :delete,
       data: { confirm: "Do you really want to delete this cocktail?"} do %>
       <i class="far fa-trash-alt"></i>
